@@ -61,3 +61,37 @@ select,#language-picker{border-radius:9px;background:#122136}
 @media(max-height:700px){.home-live{padding:9px 12px}.panel-heading{padding-bottom:12px}}
 @media(prefers-reduced-motion:reduce){.studio-glow{display:none}.panel{animation:none!important}*,*:before,*:after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important}}
 .paused .panel{animation:none!important}.paused .studio-glow{display:none}
+
+/* Each tab owns its scroll area; the header, navigation and footer stay in place. */
+.panel,#accueil{overflow-y:auto!important;overflow-x:hidden!important;overscroll-behavior-y:contain;scrollbar-width:thin;scrollbar-color:#81d8f766 #0c1725;scrollbar-gutter:stable}
+.panel::-webkit-scrollbar{width:6px}
+.panel::-webkit-scrollbar-track{background:#0c1725}
+.panel::-webkit-scrollbar-thumb{background:#81d8f766;border-radius:10px}
+.panel::-webkit-scrollbar-thumb:hover{background:#a8f4cf99}
+.panel-heading,.mobile-detail-menu{flex-shrink:0}
+.profile-copy,.career-body{overflow:visible}
+@media(min-width:901px) and (min-height:501px){
+ #accueil{grid-template-rows:minmax(560px,1fr);align-items:center}
+ .project-layout,.expertise-layout{flex:1 0 430px;min-height:430px}
+ .career-layout{flex:1 0 480px;min-height:480px}
+ .profile-layout{height:auto;flex:1 0 560px;min-height:560px}
+ .contact-layout{height:auto;flex:1 0 490px;min-height:490px}
+ .career-detail,.career-body{flex-shrink:0}
+ .portrait-stage{min-height:480px}
+}
+@media(max-width:900px),(max-height:500px){
+ .project-layout,.expertise-layout{flex:1 0 380px;min-height:380px}
+ .career-layout{flex:1 0 auto;min-height:400px}
+ .career-detail{flex:1 0 auto;min-height:250px}
+ .profile-layout{flex:1 0 auto;min-height:420px}
+ .contact-layout{flex:1 0 auto;min-height:400px}
+ .profile-copy,.career-body{overflow:visible}
+ #accueil{grid-template-rows:minmax(440px,1fr)}
+ #accueil .portrait-stage{min-height:280px}
+}
+@media(max-width:560px) and (min-height:570px){
+ #accueil{justify-content:flex-start}
+ #accueil .home-copy{flex-shrink:0}
+ #accueil .portrait-stage{flex:1 0 280px;min-height:280px;margin-top:14px}
+}
+
