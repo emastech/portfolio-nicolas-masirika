@@ -48,4 +48,16 @@
   new MutationObserver(() => {if(document.body.classList.contains('paused'))stop()})
     .observe(document.body,{attributes:true,attributeFilter:['class']});
   document.addEventListener('visibilitychange',()=>{if(document.hidden)stop()});
+
+  // Add Nicolas's current volunteer role while preserving the existing career entries.
+  const careerBody = document.querySelector('.career-body');
+  if (careerBody && !careerBody.querySelector('.current-role-card')) {
+    const card = document.createElement('aside');
+    card.className = 'current-role-card';
+    card.setAttribute('aria-label', 'Poste actuel chez OpenAcoustics Foundation');
+    card.innerHTML = '<p class="current-role-label">POSTE ACTUEL · CURRENT ROLE</p>' +
+      '<h3>OpenAcoustics Foundation</h3>' +
+      '<p>Volontaire · Chargé des relations extérieures<br><span lang="en">Volunteer · External Relations Officer</span></p>';
+    careerBody.append(card);
+  }
 })();
