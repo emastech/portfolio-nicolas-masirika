@@ -116,7 +116,7 @@ const careerChapters=[
  ]
 ];
 let chosenCareer=0,careerChapter=0;
-function renderCareer(){const c=careers[chosenCareer],chapters=careerChapters[chosenCareer],part=chapters[careerChapter];text('career-date',c.date);text('career-title',part[0]);text('career-desc',part[1]);text('career-extra',c.title+' · '+c.org);text('career-icon',c.icon);text('career-page',`Missions · ${careerChapter+1} / ${chapters.length}`);animate(document.querySelector('.career-body'))}
+function renderCareer(){const c=careers[chosenCareer],chapters=careerChapters[chosenCareer],part=chapters[careerChapter];document.querySelector('.detail-pagination').hidden=chapters.length<=1;text('career-date',c.date);text('career-title',part[0]);text('career-desc',part[1]);text('career-extra',c.title+' · '+c.org);text('career-icon',c.icon);text('career-page',`Missions · ${careerChapter+1} / ${chapters.length}`);animate(document.querySelector('.career-body'))}
 document.querySelectorAll('[data-career]').forEach(b=>b.onclick=()=>{chosenCareer=+b.dataset.career;careerChapter=0;select('[data-career]','career',chosenCareer);renderCareer()});
 document.getElementById('career-prev').onclick=()=>{careerChapter=(careerChapter+careerChapters[chosenCareer].length-1)%careerChapters[chosenCareer].length;renderCareer()};
 document.getElementById('career-next').onclick=()=>{careerChapter=(careerChapter+1)%careerChapters[chosenCareer].length;renderCareer()};renderCareer();
