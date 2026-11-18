@@ -49,15 +49,60 @@
     .observe(document.body,{attributes:true,attributeFilter:['class']});
   document.addEventListener('visibilitychange',()=>{if(document.hidden)stop()});
 
-  // Add Nicolas's current volunteer role while preserving the existing career entries.
+  // Add OpenAcoustics as a regular selectable experience in both language views.
   const careerBody = document.querySelector('.career-body');
-  if (careerBody && !careerBody.querySelector('.current-role-card')) {
-    const card = document.createElement('aside');
-    card.className = 'current-role-card';
-    card.setAttribute('aria-label', 'Poste actuel chez OpenAcoustics Foundation');
-    card.innerHTML = '<p class="current-role-label">POSTE ACTUEL · CURRENT ROLE</p>' +
-      '<h3>OpenAcoustics Foundation</h3>' +
-      '<p>Volontaire · Chargé des relations extérieures<br><span lang="en">Volunteer · External Relations Officer</span></p>';
-    careerBody.append(card);
+  const careerPicker = document.querySelector('.career-picker') ||
+    document.querySelector('.career-choice')?.parentElement;
+  const languagePicker = document.querySelector('#language-picker');
+  if (careerBody && careerPicker && !careerPicker.querySelector('.openacoustics-choice')) {
+    const copyForLanguage = () => {
+      const language = (languagePicker?.value || document.documentElement.lang || 'fr').toLowerCase();
+      return language.startsWith('en')
+        ? { role: 'Volunteer · External Relations Officer', date: 'November 2026 – Present', label: 'OpenAcoustics Foundation' }
+        : { role: 'Volontaire · Chargé des relations extérieures', date: 'Novembre 2026 – Aujourd’hui', label: 'OpenAcoustics Foundation' };
+    };
+    const entry = document.createElement('button');
+    entry.type = 'button';
+    entry.className = 'career-choice openacoustics-choice';
+    entry.setAttribute('aria-pressed', 'false');
+    const renderEntry = () => {
+      const copy = copyForLanguage();
+      entry.innerHTML = '<span class="openacoustics-choice-title">' + copy.label + '</span>' +
+        '<span class="openacoustics-choice-role">' + copy.role + '</span>' +
+        '<span class="openacoustics-choice-date">' + copy.date + '</span>';
+      entry.setAttribute('aria-label', copy.label + ', ' + copy.role + ', ' + copy.date);
+    };
+    const renderDetail = () => {
+      const copy = copyForLanguage();
+      careerBody.innerHTML = '<div class="openacoustics-detail">' +
+        '<h3>' + copy.label + '</h3>' +
+        '<p class="openacoustics-detail-role">' + copy.role + '</p>' +
+        '<p class="openacoustics-detail-date">' + copy.date + '</p>' +
+        '</div>';
+    };
+    renderEntry();
+    careerPicker.append(entry);
+    entry.addEventListener('click', event => {
+      event.preventDefault();
+      event.stopPropagation();
+      document.querySelectorAll('.career-choice').forEach(choice => {
+        choice.classList.remove('selected');
+        choice.setAttribute('aria-pressed', 'false');
+      });
+      entry.classList.add('selected');
+      entry.setAttribute('aria-pressed', 'true');
+      renderDetail();
+    });
+    document.addEventListener('click', event => {
+      const choice = event.target.closest?.('.career-choice');
+      if (choice && choice !== entry) {
+        entry.classList.remove('selected');
+        entry.setAttribute('aria-pressed', 'false');
+      }
+    });
+    languagePicker?.addEventListener('change', () => {
+      renderEntry();
+      if (entry.classList.contains('selected')) renderDetail();
+    });
   }
 })();
