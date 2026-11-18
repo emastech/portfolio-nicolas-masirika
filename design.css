@@ -95,14 +95,10 @@ select,#language-picker{border-radius:9px;background:#122136}
  #accueil .portrait-stage{flex:1 0 280px;min-height:280px;margin-top:14px}
 }
 
-/* Match the OpenAcoustics entry to the existing experience selector and detail panel. */
-.openacoustics-choice{text-align:left}
-.openacoustics-choice-title,.openacoustics-choice-role,.openacoustics-choice-date{display:block}
-.openacoustics-choice-title{color:#eef7ff;font-weight:650}
-.openacoustics-choice-role{margin-top:5px;color:var(--muted);font-size:12px;line-height:1.5}
-.openacoustics-choice-date{margin-top:4px;color:#8194a8;font-size:11px}
-.openacoustics-detail h3{margin:0 0 10px;color:#eef7ff;font-size:18px}
-.openacoustics-detail-role{margin:0 0 6px;color:var(--muted);font-size:14px;line-height:1.7}
-.openacoustics-detail-date{margin:0;color:#8194a8;font-size:12px}
-
-@media(prefers-reduced-motion:reduce){.studio-glow{display:none}.panel{animation:none!important}*,*:before,*:after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important}}
+/* Four career entries: preserve the existing card treatment at every viewport. */
+.career-picker{grid-template-rows:repeat(4,minmax(0,1fr))}
+@media(max-width:900px),(max-height:500px){
+ .career-picker{grid-template-columns:repeat(2,minmax(0,1fr));grid-template-rows:repeat(2,minmax(90px,1fr))}
+ .career-choice{min-width:0}
+ .career-choice strong{overflow-wrap:anywhere}
+}
